@@ -12,17 +12,13 @@ COPY web ./web
 RUN mvn clean package
 
 # Runtime stage
-FROM openjdk:8-jre-slim
-
-# Set working directory
+FROM maven:3.8.6-openjdk-11 AS build
 WORKDIR /app
+COPY . .
+RUN mvn clean package
 
-# Copy WAR file and webapp runner
-COPY --from=builder /app/target/*.war /app/
-COPY --from=builder /app/target/dependency/webapp-runner.jar /app/
-
-# Expose port
+FROM tomcat:9.0-jdk11
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
+COPY --from=build /app/target/SearchEngine.war /usr/local/tomcat/webapps/ROOT.war
 EXPOSE 8080
-
-# Run the application
-CMD ["java", "-jar", "webapp-runner.jar", "--port", "8080", "*.war"] 
+CMD ["catalina.sh", "run"]
