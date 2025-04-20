@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: futuristic-search
+    env: java
+    buildCommand: mvn clean package
+    startCommand: java -jar target/dependency/webapp-runner.jar --port $PORT target/*.war
+    envVars:
+      - key: JAVA_VERSION
+        value: 8 
