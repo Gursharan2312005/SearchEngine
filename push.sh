@@ -11,7 +11,7 @@ git config --global user.email "your.email@example.com"
 git add .
 
 # Commit changes
-git commit -m "Update render.yaml and push script"
+git commit -m "Add Dockerfile for Koyeb deployment"
 
 # Push to GitHub
 git push origin main 

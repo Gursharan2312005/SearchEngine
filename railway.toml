@@ -1,0 +1,10 @@
+[build]
+builder = "nixpacks"
+buildCommand = "mvn clean package"
+
+[deploy]
+startCommand = "java -jar target/dependency/webapp-runner.jar --port $PORT target/*.war"
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10 
